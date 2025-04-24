@@ -30,7 +30,8 @@ This is the output when there is a successful Server and Client connection.
 Connected by ('xxx.xxx.xxx.xxx', ppppp)
 ```
 
-IMAGE
+<img width="581" alt="image" src="https://github.com/user-attachments/assets/da56cc9a-7372-411f-a942-6c9a8396755f" />
+
 
 4. A menu is shown. Select (1-3) to access these options:
     1. The Average moisture in a refrigerator
@@ -38,7 +39,8 @@ IMAGE
     3. The Largest energy consumption of 3 IoT devices.
                                  
 
-IMAGE OF SUCCESFUL ENTRIES
+<img width="523" alt="image" src="https://github.com/user-attachments/assets/6123a3c1-7149-43ba-8ffd-2bca2ddc16c0" />
+
 
 Type "exit" to end the program and server-client connection.
 
