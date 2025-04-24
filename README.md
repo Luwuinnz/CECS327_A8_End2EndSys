@@ -1,3 +1,7 @@
+## SOCKET AND PSYCOP LIBRARIES MUST HAVE BEEN INSTALLED IN THE USED PYTHON IDE FOR THE PROGRAM TO WORK
+
+(Pycharm IDE was used)
+___
 1. Download the client_lab8.py and server_lab8.py Python files.
 
 
