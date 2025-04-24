@@ -1,7 +1,7 @@
 import socket
 
 # Valid queries
-valid_queries = { #set
+valid_queries = { #dictionary - key "#" : to query option
     #Copy and pasted from assignment 8 instructions, TCP modify client
     "1": "What is the average moisture inside my kitchen fridge in the past three hours?",
     "2": "What is the average water consumption per cycle in my smart dishwasher?",
@@ -10,7 +10,7 @@ valid_queries = { #set
 
 def print_menu():
     print("\nSelect a query:")
-    for key, query in valid_queries.items():#used a dictionary; key is device UID, value is device name
+    for key, query in valid_queries.items():#used a dictionary; key is menu #, value is menu option
         print(f"{key}. {query}")
     print("Type 'exit' to quit.\n")
 
