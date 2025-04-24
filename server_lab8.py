@@ -89,8 +89,10 @@ def handle_query(query):
             "d9fe4fca-e615-41a5-a1f6-7f0b303e6431": "Fridge 2",
             "l4s-cir-7xn-hef": "Dishwasher"
         }
-
-        usage = {device_names.get(row[0], row[0]): float(row[1]) for row in rows}
+        #2 days = 2880 minute
+        #convert to hour, so * 60 mins
+        usage = {device_names.get(row[0], row[0]): round(float(row[1])/2880 * 60, 3)
+                 for row in rows}
         #usage is a dict
         #looks similar to this {device name ID to from dictionary : # kwh}
 
