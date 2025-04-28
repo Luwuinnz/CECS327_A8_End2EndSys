@@ -4,18 +4,13 @@ SOCKET AND PSYCOPG2 LIBRARIES MUST HAVE BEEN INSTALLED IN THE USED PYTHON IDE FO
 
 Group #3 Tiffany Lin & Chris Garibay
 ___
-1. Download the client_lab8.py and server_lab8.py Python files. 
+1. Download the client8.py and server8.py Python files. 
 
 2. Run the server Python file first. You should be prompted to input a valid IP address and a port number.
 
 #### For local run of this program, use your private IP and an arbitrary port number for the Server Program.
 * Private IP: 10.39.57.168  
 * Port: 12345
-
-#### For public run of this program, use the public IP and port number provided to connect via our server-client connection.
-* Private IP: #  
-* Port: #
-
 ```
 #Prompts user to input a IP address and port number:
 
@@ -28,19 +23,22 @@ It should output this if successful binding:
 (The x and p are valid entry numbers for IP address and port number)
 Server listening on xxx.xxx.xxx.xxx:ppppp...
 ```
+---
 
-3. Then run the client Python program. Input the public IP address and the same port number used for the server program.
+3. Then run the client Python program. Input the same IP address and port number used for the server program for the local run of this program.
 ```
 Enter IP address to bind to (e.g., 127.0.0.1): 
 Enter port number to bind to (e.g., 65432):
 ```
-
+---
 This is the output when there is a successful Server and Client connection.
 
-
+---
 ```
 Connected by ('xxx.xxx.xxx.xxx', ppppp) successfully.
 ```
+
+This is some example input and output of a successful run of both server and client programs. 
 <img width="936" alt="image" src="https://github.com/user-attachments/assets/9152b8b7-1f09-4af9-842a-b2fd21b1a109" />
 
 <img width="959" alt="image" src="https://github.com/user-attachments/assets/d2b4c466-5b99-4ca6-ac4d-a84adff68e9f" />
