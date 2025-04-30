@@ -19,44 +19,44 @@ def to_real_amps(raw):
     return ((raw - zero_offset) / sensor_range) * full_amp_range
 # matches device meta data to sensor names
 sensor_map = {
-    "dac-izq-a3r-630": {
+    "ur2-2og-819-3cu": {#fridge 1
         "moisture": "Moisture Meter - moisture",
         "current": "ACS712 - ammeter"
     },
-    "d9fe4fca-e615-41a5-a1f6-7f0b303e6431": {
+    "018a6ca3-17b4-4e4a-b8de-6978843f485d": {#fridge 2
         "moisture": "sensor 1 5a921667-93ee-42cf-bf64-1eb685c323d0",
         "current": "sensor 2 5a921667-93ee-42cf-bf64-1eb685c323d0"
     },
-    "l4s-cir-7xn-hef": {
+    "xa8-r1a-4cj-qua": {#dishwasher
         "water": "YF-S201 - water consumption sensor",
         "current": "ACS712 - ammetor for dishwasher"
     }
 }
-#matches device meta data to device names
+#matches device asset uid to device names
 device_names = {
-    "dac-izq-a3r-630": "Fridge 1",
-    "d9fe4fca-e615-41a5-a1f6-7f0b303e6431": "Fridge 2",
-    "l4s-cir-7xn-hef": "Dishwasher"
+    "ur2-2og-819-3cu": "Fridge 1",
+    "018a6ca3-17b4-4e4a-b8de-6978843f485d": "Fridge 2",
+    "xa8-r1a-4cj-qua": "Dishwasher"
 }
 
 # load all sensor readings into memory
 def load_virtual_data():
-    cur = conn.cursor()#opens a cursor object from the database connection.a cursor lets you send SQL commands to the NeonDB database.
-    cur.execute('SELECT payload FROM "fridge table_virtual";')#this retrieves every row from your virtual table but only the payload column
+    cur = conn.cursor()#opens a cursor object from the database connection. a cursor lets you send SQL commands to the NeonDB database.
+    cur.execute('SELECT payload FROM "assignment 8_virtual";')#this retrieves every row from your virtual table but only the payload column
     rows = cur.fetchall()#fetches all rows from the result of the SQL query and into a list
 
     data = {}#dictionary used to organize data
     for row in rows:
         try:
             payload = json.loads(row[0]) if isinstance(row[0], str) else row[0]# loads the payload json string into a python dictionary.row[0] is the payload.
-            asset_uid = payload["asset_uid"]#get device metadata
+            asset_uid = payload["asset_uid"]#get device uid
             raw_ts = payload.get("timestamp")#gets time
 
             if not raw_ts:#if no timestamp skip payload
                 continue
 
             timestamp = datetime.fromtimestamp(int(raw_ts))#Converts the timestamp from unix format into a python datetime object.
-            if asset_uid not in data:#if this is the first time seeing this device metadata create a blank container
+            if asset_uid not in data:#if this is the first time seeing this device uid create a blank container
                 data[asset_uid] = {"moisture": [], "current": [], "water": []}
 
             for key, field in sensor_map.get(asset_uid, {}).items():#loops through each sensor type for this specific device.sensor_map tells you what sensor names to expect inside the payload.
@@ -71,9 +71,9 @@ def load_virtual_data():
     return data
 #used to print data to see why fridge 2data was off for electricty. no longer needed fixed but keeping it here anyways
 def print_simple_staggered(data):
-    fridge1 = data.get("dac-izq-a3r-630", {}).get("current", [])
-    fridge2 = data.get("d9fe4fca-e615-41a5-a1f6-7f0b303e6431", {}).get("current", [])
-    dishwasher = data.get("l4s-cir-7xn-hef", {}).get("current", [])
+    fridge1 = data.get("ur2-2og-819-3cu", {}).get("current", [])
+    fridge2 = data.get("018a6ca3-17b4-4e4a-b8de-6978843f485d", {}).get("current", [])
+    dishwasher = data.get("xa8-r1a-4cj-qua", {}).get("current", [])
 
 
 
@@ -94,7 +94,7 @@ def handle_query(query):
     #print_simple_staggered(data)
 
     if "average moisture" in query:
-        asset_uid = "dac-izq-a3r-630"  # Fridge 1
+        asset_uid = "ur2-2og-819-3cu"  # Fridge 1
         now = datetime.now()
         readings = [val for (ts, val) in data.get(asset_uid, {}).get("moisture", [])#filters fridge 1 moisture readings to only keep the ones from the last 3 hours.
                     if ts >= now - timedelta(hours=3)]
@@ -107,7 +107,7 @@ def handle_query(query):
         return f"Average Relative Humidity inside the kitchen Fridge 1 (past 3 hours): {rel_humid}% RH"
 
     elif "average water consumption" in query:
-        asset_uid = "l4s-cir-7xn-hef" #Dishwasher
+        asset_uid = "xa8-r1a-4cj-qua" #Dishwasher
         readings = data.get(asset_uid, {}).get("water", [])
 
         if not readings:
